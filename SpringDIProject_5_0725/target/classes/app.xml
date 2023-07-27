@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- db properties 파일 읽기 -->
-	<util:properties id="db" location="classpath:db.properties" />
+	<util:properties id="db" location="classpath:db.properties" />  
 	<!-- DataSource : Database의 정보를 가지고 있다 (driver,username,password,url) -->
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource" 
 	  p:driverClassName="#{db['driver']}"
