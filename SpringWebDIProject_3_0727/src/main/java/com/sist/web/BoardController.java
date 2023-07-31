@@ -54,7 +54,29 @@ public class BoardController {
 		return "redirect:list.do";
 	}
 	// Update
+	@GetMapping("update.do")	
+	public String board_update(int no,Model model) {   //model은 전송 객체
+		BoardVO vo = dao.boardUpdateData(no);
+		model.addAttribute("vo", vo);
+		return "board/update";
+	}
 	// Delete
+	/*
+	 * delete.do?no=${vo.no }    400:Bad Request
+	 */
+	@GetMapping("delete.do")
+	public String board_delete(int no, Model model) {
+		model.addAttribute("no", no);
+		return "board/delete";
+	}
+	@PostMapping("delete_ok.do")
+	public String board_delete_ok(int no,String pwd,Model model) {
+		
+		boolean bCheck=dao.boardDelete(no, pwd);
+		model.addAttribute("bCheck", bCheck);
+		return "board/delete_ok";
+	}
+	
 	// Detail
 	/*
 	 *  class Model {
@@ -71,5 +93,21 @@ public class BoardController {
 		model.addAttribute("vo", vo);
 		return "board/detail";
 	}
+	/*
+	 *  1.Spring MVC
+	 *    1) DispatcherServlet 등록 => web.xml
+	 *       => 클래스를 등록한 파일 셋팅 (클래스 관리)
+	 *       => 한글 변환
+	 *    2) 클래스 제작
+	 *       => VO
+	 *       => Mapper
+	 *       => DAO
+	 *       => Model
+	 *    3) application.xml (클래스 등록)
+	 *    4) JSP
+	 *   --------------------------------------------   
+	 */
+	
+	
 	// Find ==> 동적 쿼리
 }
