@@ -53,6 +53,8 @@ public class BoardController {
 		dao.boardInsert(vo);
 		return "redirect:list.do";
 	}
+	
+
 	// Update
 	@GetMapping("update.do")	
 	public String board_update(int no,Model model) {   //model은 전송 객체
