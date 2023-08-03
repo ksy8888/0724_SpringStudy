@@ -1,5 +1,6 @@
 package com.sist.dao;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -83,6 +84,104 @@ public class BoardDAO {
 		vo.setRoot(root);
 		mapper.boardReplyInsert(vo);
 		mapper.boardDepthIncrement(root);
+	}
+	
+///수정
+	public BoardVO boardUpdateData(int no) {
+		return mapper.boardDetailData(no);
+	}
+	
+/*	@Select("SELECT pwd FROM springReplyBoard "
+			+ "WHERE no=#{no}")
+	public String boardGetPassword(int no);
+	@Update("UPDATE springRelyBoard SET name=#{name},subject=#{subject},content=#{content} "
+			+ "WHERE no=#{no}")
+*/	public boolean boardUpdate(BoardVO vo) {
+		boolean bCheck=false;
+		String db_pwd = mapper.boardGetPassword(vo.getNo());
+		if(db_pwd.equals(vo.getPwd())) {
+			bCheck=true;
+			mapper.boardUpdate(vo);
+		}
+		
+		return bCheck;
+}
+
+//삭제
+/*	@Select("SELECT root,depth FROM springReplyBoard "
+			+ "WHERE no=#{no}")
+	public BoardVO boardInfoData(int no);
+	@Update("UPDATE springReplyBoard SET "
+			+ "subject='관리자가 삭제한 게시물입니다',content='관리자가 삭제한 게시물입니다' "
+			+ "WHERE no=#{no}")
+	public void boardSubjectUpdate(int no);
+	@Delete("DELETE FROM springReplyBoard "
+			+ "WHERE no=#{no}")
+	public void boardDelete(int no);
+	@Update("UPDATE springReplyBoard SET "
+			+ "depth=depth-1 "
+			+ "WHERE no=#{no}")
+	public void boardDepthDecrement(int no);
+*/	
+
+/*
+ *   1. 트랜잭션
+ *     = 여러개의 SQL문장(DML=INSERT,UPDATE,DELETE)을 하나의 그룹으로 묶어서 처리하는 단위
+ *     = 물리적으로는 여러개의 SQL문장 수행 => 논리적으로는 하나의 작업으로 인식
+ *     = 일괄처리
+ *   2. TransactionManager를 등록 : XML
+ *     <tx:annotation-driven/>
+	     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		   p:dataSource-ref="ds"
+		 />
+	 3. 전파
+	    Propagation.REQUIRED  : 기본형
+	       트랜잭션을 사용중이면 다음에 다시 재사용이 가능하게 만든다
+	       => 시작할때만 한번 생성
+	       public void delete()
+	       {
+	          try {
+	             conn.setAutoCommit(false)  ==> @Around
+	             -------------------
+	               개발자 소스
+	               boardDelete
+	             -------------------
+	             conn.commit()
+	          } catch(Exception ex) {
+	              conn.rollback()   ==> @AfterThrowing
+	          } finally {
+	              conn.setAutoCommit(true)   ==> @After
+	          }
+	       } 
+	    Propagation.REQUIRED_NEW : 무조건 새롭게 생성
+	    Propagation.NAVER : 트랜잭션을 무조건 설정
+ */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+	public boolean boardDelete(int no,String pwd) {
+		boolean bCheck = false;
+		// 비밀번호 읽기
+		String db_pwd = mapper.boardGetPassword(no);
+		
+		if(db_pwd.equals(pwd)) {
+			bCheck = true;
+			//삭제할 수 있는 게시물인지 확인 => depth
+			BoardVO vo = mapper.boardInfoData(no);
+			if(vo.getDepth()==0) {
+				mapper.boardDelete(no);
+			} else {
+				mapper.boardSubjectUpdate(no);
+			}
+			mapper.boardDepthDecrement(vo.getRoot());
+		} else {
+			bCheck = false;
+			
+		}
+		return bCheck;
+	}
+	
+	//검색
+	public List<BoardVO> boardFindData(Map map) {
+		return mapper.boardFindData(map);
 	}
 	
 }

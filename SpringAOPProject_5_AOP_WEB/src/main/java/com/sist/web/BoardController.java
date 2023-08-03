@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 import com.sist.dao.*;
@@ -75,5 +76,73 @@ public class BoardController {
 		
 		dao.boardReplyInsert(pno, vo);
 		return "redirect:../board/list.do"; //_ok
+	}
+	
+	//update
+	@GetMapping("update.do")
+	public String board_update(int no, Model model)	{
+		//필요한 데이터를 전송
+		BoardVO vo =dao.boardUpdateData(no);
+		model.addAttribute("vo", vo);
+		model.addAttribute("main_jsp", "../board/update.jsp");
+		return "main/main";
+	}
+	@PostMapping(value = "update_ok.do", produces = "text/html;charset=UTF-8")
+	@ResponseBody     //jsp에 내가 원하는 문자만 보내줌 (스크립트 전송)
+	public String board_update_ok(BoardVO vo) {
+		String result="";
+		boolean bCheck = dao.boardUpdate(vo);
+		if(bCheck==true) {
+			result = "<script>"
+					+"location.href=\"../board/detail.do?no="+vo.getNo()+"\""
+					+"</script>";
+		} else {
+			result="<script>"
+					+"alert(\"비밀번호가 틀립니다!!\");"
+					+"history.back();"
+					+"</script>";
+		}
+		return result;
+	}
+	
+	@GetMapping("delete.do")
+	public String board_delete(int no,Model model) {
+		model.addAttribute("no", no);
+		model.addAttribute("main_jsp", "../board/delete.jsp");
+		return "main/main";
+	}
+	
+	@PostMapping(value = "delete_ok.do", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String board_delete_ok(int no,String pwd) {
+		String result="";
+		boolean bCheck = dao.boardDelete(no, pwd);
+		
+		if(bCheck==true) {
+			result = "<script>"
+					+"location.href=\"../board/list.do\""
+					+"</script>";
+		} else {
+			result="<script>"
+					+"alert(\"비밀번호가 틀립니다!!\");"
+					+"history.back();"
+					+"</script>";
+		}		
+		return result;
+	}
+	
+	//검색
+	@PostMapping("find.do")
+	public String board_find(String[] fs, String ss, Model model) ///String[] fs > N,C,S //String ss: 검색어
+	{
+		//검색된 데이터를 읽어 온다 (데이터베이스 연결)
+		Map map = new HashMap();
+		map.put("fsArr", fs);
+		map.put("ss", ss);
+		
+		List<BoardVO> list = dao.boardFindData(map);
+		model.addAttribute("list", list);
+		model.addAttribute("main_jsp", "../board/find.jsp");
+		return "main/main";
 	}
 }
