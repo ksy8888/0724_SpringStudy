@@ -11,7 +11,7 @@
   <header id="header" class="clear"> 
     <!-- ################################################################################################ -->
     <div id="logo" class="fl_left">
-      <h1><a href="index.html">Tiles & Session</a></h1>
+      <h1><a href="../main/main.do">Tiles & Session</a></h1>
     </div>
     <div class="fl_right">
       <ul class="inline">
@@ -41,14 +41,14 @@
       <li><a class="drop" href="#">맛집</a>
         <ul>
           <li><a href="../member/join.do">맛집 추천</a></li>
-          <li><a href="pages/full-width.html">맛집 찾기</a></li>
+          <li><a href="../food/food_find.do">맛집 찾기</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">서울</a>
         <ul>
-         <li><a href="#">명소</a></li>
-         <li><a href="#">자연</a></li>
-         <li><a href="#">쇼핑</a></li>
+         <li><a href="../seoul/list.do">명소</a></li>
+         <li><a href="../seoul/list.do?no=2">자연</a></li>
+         <li><a href="../seoul/list.do?no=3">쇼핑</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">스토어</a>
@@ -59,6 +59,7 @@
       </li>
       <li><a href="#">커뮤니티</a></li>
       <li><a href="#">마이페이지</a></li>
+      <li><a href="../movie/movie_rank.do">영화순위</a></li>
     </ul>
     <!-- ################################################################################################ --> 
   </nav>

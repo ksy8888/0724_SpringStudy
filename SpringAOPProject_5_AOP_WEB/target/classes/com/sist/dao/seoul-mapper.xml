@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sist.mapper.SeoulMapper">
+ 	<resultMap type="com.sist.vo.SeoulVO" id="seoulMap">
+ 	 <result property="no" column="no"/>
+ 	 <!-- 
+ 	    vo.setNo(rs.getInt("no"))
+ 	    no,title,poster,msg,address
+ 	  -->
+ 	  <result property="title" column="title"/>
+ 	  <result property="poster" column="poster"/>
+ 	  <result property="msg" column="msg"/>
+ 	  <result property="address" column="address"/>
+ 	</resultMap>
+ </mapper>

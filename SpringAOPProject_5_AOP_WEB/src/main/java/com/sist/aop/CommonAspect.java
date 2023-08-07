@@ -21,7 +21,7 @@ import com.sist.service.*;
 @Component
 public class CommonAspect {
 	@Autowired
-	private FoodService service;
+	private FoodService service; 
 	
 	@After("execution(* com.sist.web.*Controller.*(..))")
 	public void footerDataSend() {
