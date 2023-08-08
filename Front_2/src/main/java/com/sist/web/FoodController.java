@@ -19,4 +19,9 @@ public class FoodController {
 	public String food_list() {
 		return "food/list";
 	}
+	
+	@GetMapping("food/find.do")
+	public String food_find() {
+		return "food/find";
+	}
 }
