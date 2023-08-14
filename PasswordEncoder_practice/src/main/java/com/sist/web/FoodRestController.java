@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sist.dao.*;
 import com.sist.vo.*;
@@ -49,5 +51,20 @@ public class FoodRestController {
 		ObjectMapper mapper = new ObjectMapper();
 		String json =  mapper.writeValueAsString(list);
 		return json;
+	}
+	
+	@GetMapping(value = "food/food_detail_vue.do", produces = "text/plain;charset=UTF-8")
+	public String food_detail(int fno,HttpSession session) throws Exception {
+		String id=(String)session.getAttribute("id");
+		String result="";
+		FoodVO vo = dao.foodDetailData(fno);
+		String addr=vo.getAddress();
+		addr=addr.substring(0, addr.indexOf("지번"));
+		vo.setAddress(addr.trim()); //json 변경요청
+		vo.setSessionId(id);
+		// vo를 JSON으로 변경
+		ObjectMapper mapper =new ObjectMapper();
+		result = mapper.writeValueAsString(vo);
+		return result;
 	}
 }
