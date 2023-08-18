@@ -22,6 +22,12 @@ public class FoodDAO {
 		return mapper.foodCategoryInfoData(cno);
 	}
 	
+	public List<FoodVO> foodListData(int cno) {
+		return mapper.foodListData(cno);
+	}
+	
+	
+	
 	//검색
 	public List<FoodVO> foodFindData(Map map) {
 		return mapper.foodFindData(map);

@@ -31,6 +31,32 @@
 	      <h4 class="text-center">{{cate_info.subject}}</h4>
 	    </div>
 	  	  <div class = "row">
+	  	    <table class="table">
+	  	      <tr>
+	  	       <td>
+	  	        <table class="table" v-for="vo in food_list">
+	  	         <tr>
+	  	          <td width="30%" class="text-center" rowspan="4">
+	  	            <a :href="'../food/food_detail.do?fno='+vo.fno"> <!-- v-for="vo in food_list" -->
+	  	            <img :src="vo.poster" style="width: 300px;height:200px" class="img-rounded">
+	  	            </a>
+	  	          </td>
+	  	          <td width="70%"><h4><a :href="'../food/food_detail.do?fno='+vo.fno">{{vo.name}}</a>&nbsp;
+	  	          <span style="color:orange">{{vo.score}}</span></h4></td>
+	  	         </tr>
+	  	         <tr>
+	  	          <td width=70%>{{vo.address}}</td>
+	  	         </tr>
+	  	         <tr>
+	  	          <td width=70%>{{vo.phone}}</td>
+	  	         </tr>
+	  	         <tr>
+	  	          <td width=70%>{{vo.type}}</td>
+	  	         </tr>
+	  	        </table>
+	  	       </td>
+	  	      </tr>
+	  	    </table>
 	  	  </div>
 	  </main>
 	</div>
@@ -50,16 +76,21 @@
 		  }).then(res=>{
 			  console.log(res.data)
 			  this.cate_info=res.data
+		  }).catch(error=>{
+			  console.log(error.response)
 		  })
-		  /*
+		  // @sessionAttribute() 
 		   axios.get('http://localhost/web/food/food_list_vue.do',{
 			  params: {
 				  cno:this.cno 
 			  }
 		  }).then(res=>{
+			  console.log(res.data)
 			  this.food_list=res.data
+		  }).catch(error=>{
+			  console.log(error.response)
 		  })
-		  */
+		  
 	  }
   })
 </script>
