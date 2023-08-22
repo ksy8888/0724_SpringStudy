@@ -37,21 +37,18 @@
 	  	        <table class="table" v-for="vo in food_list">
 	  	         <tr>
 	  	          <td width="30%" class="text-center" rowspan="4">
-	  	            <a :href="'../food/food_detail.do?fno='+vo.fno"> <!-- v-for="vo in food_list" -->
+	  	            <a :href="'../food/food_detail_before.do?fno='+vo.fno"> <!-- v-for="vo in food_list" -->
 	  	            <img :src="vo.poster" style="width: 300px;height:200px" class="img-rounded">
 	  	            </a>
 	  	          </td>
-	  	          <td width="70%"><h4><a :href="'../food/food_detail.do?fno='+vo.fno">{{vo.name}}</a>&nbsp;
+	  	          <td width="70%"><h4><a :href="'../food/food_detail_before.do?fno='+vo.fno">{{vo.name}}</a>&nbsp;
 	  	          <span style="color:orange">{{vo.score}}</span></h4></td>
 	  	         </tr>
 	  	         <tr>
-	  	          <td width=70%>{{vo.address}}</td>
+	  	          <td width=70%>{{vo.address}}&nbsp;({{vo.phone}})</td>
 	  	         </tr>
 	  	         <tr>
-	  	          <td width=70%>{{vo.phone}}</td>
-	  	         </tr>
-	  	         <tr>
-	  	          <td width=70%>{{vo.type}}</td>
+	  	          <td width=70%><b style="color:orange;">{{vo.userName}}</b>&nbsp;{{vo.rdata}}</td>
 	  	         </tr>
 	  	        </table>
 	  	       </td>

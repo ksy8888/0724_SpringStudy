@@ -8,13 +8,13 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
-<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">   <!--  -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>		<!--  -->
 
 <style type="text/css">
@@ -94,14 +94,14 @@
         <td width="25%">영업시간</td>
         <td width="75%">{{food_detail.time}}</td>
        </tr>
-       <tr v-if="food_detail.menu!='no'">
+        <tr v-if="food_detail.menu!='no'">
         <td width="25%">메뉴</td>
         <td width="75%">
          <ul>
            <li v-for="m in menus">{{m}}</li>
          </ul>
         </td>
-       </tr>
+       </tr> 
      </table>
     </div>
     <!-- / main body -->
@@ -198,9 +198,9 @@
 				console.log(response.data)
 				this.food_detail=response.data
 				this.posters=this.food_detail.poster.split("^"); //출력은 <div dialog쪽
-				if(this.food_detail.menu != 'no') {
+				 if(this.food_detail.menu != 'no') {
 					this.menus=this.food_detail.menu.split("원");
-				}
+				} 
 				
 				$('#dialog').dialog({
 					autoOpen:false,
@@ -208,7 +208,7 @@
 					width:700,
 					height:600
 				}).dialog("open");
-			  }).catch(error=> {
+			  }).catch(error=>{
 				 console.log(error.response)  
 			  })
 		  }

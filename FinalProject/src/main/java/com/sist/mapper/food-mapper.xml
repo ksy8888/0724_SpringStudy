@@ -5,9 +5,9 @@
 <mapper namespace="com.sist.mapper.FoodMapper">
  	
  	<select id="foodFindData" resultType="FoodVO" parameterType="hashmap">
- 	  SELECT fno,name,poster,num
- 	  FROM (SELECT fno,name,poster,rownum as num 
- 	  FROM (SELECT fno,name,poster 
+ 	  SELECT fno,name,poster,menu,num
+ 	  FROM (SELECT fno,name,poster,menu,rownum as num 
+ 	  FROM (SELECT fno,name,poster,menu 
  	  FROM food_location 
  	    <if test="column!='all'">
  	      WHERE ${column} LIKE '%'||#{fd}||'%'
