@@ -17,7 +17,7 @@ import com.sist.vo.*;
 public class FooterAspect {
 	@Autowired
 	private AspectDAO dao;
-	
+	 
 	@After("execution(* com.sist.web.*Controller.*(..))") //finally >> 에러가 나도 footer에 뿌려줌
 	public void footerData() {
 		// => 매개변수에 값을 채워준다 (DispatcherServlet)
